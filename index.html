@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crypto Pulse Dashboard</title>
+    <meta
+      name="description"
+      content="Live cryptocurrency dashboard with market overview, charts, portfolio tracking, and alerts."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="brand-mark">₿</div>
+          <div>
+            <div class="eyebrow">Portfolio monitor</div>
+            <h1>Crypto Pulse</h1>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <button id="refreshBtn" class="ghost-btn">Refresh Now</button>
+          <div class="status-pill"><span class="live-dot"></span> Live</div>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="hero-panel panel">
+          <div>
+            <p class="section-label">Market overview</p>
+            <h2>Track crypto trends in real time</h2>
+          </div>
+
+          <div class="hero-metrics">
+            <div>
+              <span>Total market cap</span>
+              <strong id="marketCap">--</strong>
+            </div>
+            <div>
+              <span>24h volume</span>
+              <strong id="marketVolume">--</strong>
+            </div>
+            <div>
+              <span>BTC dominance</span>
+              <strong id="btcDominance">--</strong>
+            </div>
+          </div>
+        </section>
+
+        <section id="marketCards" class="market-grid"></section>
+
+        <section class="panel chart-panel">
+          <div class="panel-head">
+            <div>
+              <p class="section-label">Chart</p>
+              <h3 id="chartTitle">Bitcoin</h3>
+            </div>
+
+            <div class="chart-controls">
+              <label for="coinSelect">Coin</label>
+              <select id="coinSelect">
+                <option value="bitcoin">Bitcoin (BTC)</option>
+                <option value="ethereum">Ethereum (ETH)</option>
+                <option value="solana">Solana (SOL)</option>
+                <option value="ripple">XRP (XRP)</option>
+                <option value="dogecoin">Dogecoin (DOGE)</option>
+                <option value="binancecoin">BNB (BNB)</option>
+                <option value="tether">Tether (USDT)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="chart-wrapper">
+            <canvas id="priceChart" aria-label="Crypto price chart"></canvas>
+          </div>
+        </section>
+
+        <section class="bottom-grid">
+          <div class="panel table-panel">
+            <div class="panel-head small-gap">
+              <div>
+                <p class="section-label">Watchlist</p>
+                <h3>Top tracked coins</h3>
+              </div>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Coin</th>
+                    <th>Price</th>
+                    <th>24h</th>
+                    <th>Market cap</th>
+                  </tr>
+                </thead>
+                <tbody id="watchlistTable"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="side-stack">
+            <section class="panel">
+              <div class="panel-head small-gap">
+                <div>
+                  <p class="section-label">Portfolio</p>
+                  <h3>Holdings</h3>
+                </div>
+              </div>
+
+              <div id="portfolioSummary" class="portfolio-summary"></div>
+
+              <form id="portfolioForm" class="mini-form">
+                <input id="portfolioSymbol" type="text" placeholder="BTC" maxlength="10" />
+                <input id="portfolioAmount" type="number" step="0.0001" placeholder="Amount" min="0" />
+                <button type="submit">Add</button>
+              </form>
+
+              <div id="portfolioList" class="portfolio-list"></div>
+            </section>
+
+            <section class="panel">
+              <div class="panel-head small-gap">
+                <div>
+                  <p class="section-label">Alerts</p>
+                  <h3>Set price trigger</h3>
+                </div>
+              </div>
+
+              <form id="alertForm" class="mini-form stacked">
+                <select id="alertCoin">
+                  <option value="bitcoin">Bitcoin</option>
+                  <option value="ethereum">Ethereum</option>
+                  <option value="solana">Solana</option>
+                  <option value="ripple">XRP</option>
+                  <option value="dogecoin">Dogecoin</option>
+                  <option value="binancecoin">BNB</option>
+                </select>
+                <input id="alertTarget" type="number" step="0.01" placeholder="Target price" min="0" />
+                <button type="submit">Add alert</button>
+              </form>
+
+              <div id="alertList" class="alert-list"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
